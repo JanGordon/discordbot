@@ -66,7 +66,7 @@ class game {
                   .setCustomId('tt31')
                   .setLabel('■')
                   .setStyle(this.gameBoard[2][0])
-                  .setDisabled(!this.gameBoard[2][0] == "SECONDARY" || this.gameBoardD[2][0] == "disabled")
+                  .setDisabled(!this.gameBoard[2][0] != "SECONDARY" || this.gameBoardD[2][0] == "disabled")
                   ,
               new Discord.MessageButton()
                   .setCustomId('tt32')
@@ -92,7 +92,8 @@ class game {
         this.player2 = user
     }
 
-    place(xy, user) {
+    place(xy, user)
+     {
         console.log(this.gameBoard, xy[0])
         if (this.gameBoard[xy[0]-1][xy[1]-1] == "SECONDARY") {
             let buttontype = "SECONDARY";

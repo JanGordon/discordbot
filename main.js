@@ -388,7 +388,11 @@ client.on('messageCreate', async message => {
             message.channel.send(`Pong!`)
             // Send 'pong' into the channel if the ping command is heard
             }
+        if (message.content.includes("pong")) {
+            message.channel.send("Ping!")
         }
+        }
+        
     }
     
 );
