@@ -350,7 +350,8 @@ Queue: ${titles}
             resource = createAudioResource(stream.stream, {
             inputType: stream.type
             })
-
+            resource.video_info = {}
+            resource.video_info.title = args[0]
             
             musicQueue.push(resource)
         }
