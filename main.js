@@ -4,6 +4,7 @@ const { joinVoiceChannel, createAudioPlayer, NoSubscriberBehavior, createAudioRe
 const play = require('play-dl'); // Everything
 const solenolyrics = require("solenolyrics"); 
 const perms = require("./perms.json")
+const discordTTS = require('discord-tts');
 const cron = require('node-cron');
 const puppeteer = require("puppeteer");
 const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_VOICE_STATES"] });
@@ -338,6 +339,20 @@ Queue: ${titles}
             }
             
             
+        }
+    },
+    speak : {
+        filter: message=>message.content.startsWith("!speak"),
+        callback: async function(e){
+            var args = e.content.replace("!speak ", "").split(" ")
+            let stream, resource;
+            stream = discordTTS.getVoiceStream('test 123')
+            resource = createAudioResource(stream.stream, {
+            inputType: stream.type
+            })
+
+            
+            musicQueue.push(resource)
         }
     },
     // permissions : {
