@@ -44,6 +44,12 @@ let commands = {
             e.channel.send("Hello")
         }
     },
+    anime : {
+        filter: message=>message.content.includes("anime"),
+        callback: function(e){
+            e.channel.send("Anime is a bad thing")
+        }
+    },
     schedule : {
         filter: message=>message.content=="!schedule",
         callback: function(e){
@@ -294,6 +300,12 @@ let commands = {
             e.channel.send("Music skipped")
         }
     },
+    james : {
+        filter: message=>message.author.includes("JAMES"),
+        callback: async function(e){
+            e.channel.send("JAMES has spoken")
+        }
+    },
     queue : {
         filter: message=>message.content.startsWith("!queue"),
         callback: async function(e){
@@ -346,7 +358,7 @@ Queue: ${titles}
         callback: async function(e){
             var args = e.content.replace("!speak ", "").split(" ")
             let stream, resource;
-            stream = discordTTS.getVoiceStream('test 123')
+            stream = await discordTTS.getVoiceStream('hee hee')
             resource = createAudioResource(stream.stream, {
             inputType: stream.type
             })

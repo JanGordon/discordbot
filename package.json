@@ -3,12 +3,13 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "start": "node main.js",
+    "start": "nodemon --exec 'npm start'",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
   },
   "devDependencies": {
+    "nodemon": "^2.0.19",
     "vite": "^2.9.9"
   },
   "dependencies": {
