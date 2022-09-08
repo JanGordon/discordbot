@@ -9,10 +9,11 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "nodemon": "^2.0.19",
+    
     "vite": "^2.9.9"
   },
   "dependencies": {
+    "nodemon": "^2.0.19",
     "@discordjs/voice": "^0.10.0",
     "discord-tts": "^1.2.1",
     "discord.js": "^13.8.0",
