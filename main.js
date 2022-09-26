@@ -11,7 +11,11 @@ const cron = require('node-cron');
 const puppeteer = require("puppeteer");
 const { count } = require('console');
 const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_VOICE_STATES"] });
+<<<<<<< HEAD
 const token = "OTg2NzEyNjkwOTA5MTI2NzI3.GHRoxX.qXw55gwyID_GwP0XsYAx9QAc6LAsIVE03vVfos"
+=======
+const token = ""
+>>>>>>> 5ab260ac396a820f96125744e81da3f5fba76af5
 client.once('ready', () => {
 	console.log(`Ready`)
 });
