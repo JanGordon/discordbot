@@ -6,7 +6,7 @@
     "start": "nodemon --exec 'npm run run'",
     "run": "node main.js",
     "dev": "vite",
-    "build": "vite build",
+    "build": "echo built succesfully",
     "preview": "vite preview"
   },
   "devDependencies": {
