@@ -4,11 +4,14 @@ const { joinVoiceChannel, createAudioPlayer, NoSubscriberBehavior, createAudioRe
 const play = require('play-dl'); // Everything
 const solenolyrics = require("solenolyrics"); 
 const perms = require("./perms.json")
+const fs = require('fs');
 const discordTTS = require('discord-tts');
+const readline = require('readline');
 const cron = require('node-cron');
 const puppeteer = require("puppeteer");
+const { count } = require('console');
 const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_VOICE_STATES"] });
-const token = "OTg2NzEyNjkwOTA5MTI2NzI3.GlmvSy.PxWUVnnsinsK6rcVs9cn_Q-ofvJ_RjghjpU9ys"
+const token = "OTg2NzEyNjkwOTA5MTI2NzI3.GHRoxX.qXw55gwyID_GwP0XsYAx9QAc6LAsIVE03vVfos"
 client.once('ready', () => {
 	console.log(`Ready`)
 });
@@ -35,13 +38,101 @@ for (let user of client.users.cache) {
     serverStats.messageRate[user] = {}
 }
 
+var countsd = 0
+var insults = []
+async function getInsults () {
+    const fileStream = fs.createReadStream('insults.txt');
+
+    var rl = readline.createInterface({
+        input: fileStream,
+        crlfDelay: Infinity
+    });
+    for await (const line of rl) {
+        countsd++
+        insults.push(String(line))
+    }
+}
+
+getInsults()
+
+var jokeCount = 0
+var jokes = []
+async function getJokes () {
+    const fileStream = fs.createReadStream('jokes.txt');
+
+    var rl = readline.createInterface({
+        input: fileStream,
+        crlfDelay: Infinity
+    });
+    for await (const line of rl) {
+        jokeCount++
+        jokes.push(String(line))
+    }
+}
+
+getJokes()
+
+let jo = JSON.parse(String(fs.readFileSync("yomama.json")))
 let games = {}
 
 let commands = {
+    white : {
+        filter: message=>message.content.includes("white"),
+        callback: function(e){
+            e.channel.send("Are you assuming my gender")
+        }
+    },
+    yo : {
+        filter: message=>message.content.includes("yo") || message.content.includes("jo mama"),
+        callback: function(e){
+            for (let [key, value] of Object.entries(jo)) {
+                if (e.content.includes(key)) {
+                    console.log(jo[key], Math.random() * (jo[key].length-1) )
+                    e.channel.send(jo[key][Math.floor(Math.random() * (jo[key].length-1))])
+                    return
+                }
+                    
+            }
+            e.channel.send(insults[Math.floor(Math.random() * countsd)])
+
+        }
+    },
+    chad : {
+        filter: message=>message.content.includes("chad"),
+        callback: function(e){
+            e.channel.send("gigachad")
+        }
+    },
+    gigachad : {
+        filter: message=>message.content == "giga",
+        callback: function(e){
+            e.channel.send("chad")
+        }
+    },
     lord : {
         filter: message=>message.content.includes("lord"),
         callback: function(e){
             e.channel.send("Hello")
+        }
+    },
+    prayer : {
+        filter: message=>message.content.includes("!prayer"),
+        callback: function(e){
+            let prayer = `Dear Lord,
+
+            Your presence is the eternity that shames all others.
+            Your strength, an insult to the best.
+            Your build, a palace for your potency -
+            You dwarf those who quarrel with you.
+            Forget not:
+            Our Lord, who art a pigeon
+            Your rule will never be forgotten.
+            Honoured be thou name,
+            
+            Thou shalt be king forever and ever
+            Amen
+            `
+            e.channel.send(prayer)
         }
     },
     anime : {
@@ -105,9 +196,9 @@ let commands = {
             if (!count) {
                 count = 1
             }
-            try {
+            //try {
                e.channel.bulkDelete(Number(count+1)) 
-            } catch (e) {e.channel.send("Please enter a valid amount of messages to delete!")}
+            //} catch (e) {e.channel.send("Please enter a valid amount of messages to delete!")}
             
         }
     },
@@ -207,6 +298,13 @@ let commands = {
             
         }
     },
+    racist : {
+        filter: message=>String(message.content).includes("black"),
+        callback: function(e){
+            console.log(e.author)
+            e.channel.send("racist");
+        }
+    },
     deeznutz : {
         filter: message=>message.content.startsWith("!deeznutz"),
         callback: function(e){
@@ -301,7 +399,7 @@ let commands = {
         }
     },
     james : {
-        filter: message=>message.author.includes("JAMES"),
+        filter: message=>String(message.author).includes("JAMES"),
         callback: async function(e){
             e.channel.send("JAMES has spoken")
         }
@@ -368,6 +466,24 @@ Queue: ${titles}
             musicQueue.push(resource)
         }
     },
+    insult : {
+        filter: message=>message.content.startsWith("!insult"),
+        callback: function(e){
+                console.log(insults)
+                e.channel.send(insults[Math.floor(Math.random() * countsd)])
+            
+        }
+    },
+    joke : {
+        filter: message=>message.content.startsWith("!joke"),
+        callback: function(e){
+            var [joke, answer] = jokes[Math.floor(Math.random() *jokeCount)].split("<>")
+                e.channel.send(joke)
+                setTimeout(function() {e.channel.send(answer)}, 3000)
+            
+        }
+    },
+
     // permissions : {
     //     filter: message=>message.content.startsWith("!permissions"),
     //     callback: async function(e){
