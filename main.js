@@ -8,7 +8,7 @@ const discordTTS = require('discord-tts');
 const cron = require('node-cron');
 const puppeteer = require("puppeteer");
 const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_VOICE_STATES"] });
-const token = "OTg2NzEyNjkwOTA5MTI2NzI3.GlmvSy.PxWUVnnsinsK6rcVs9cn_Q-ofvJ_RjghjpU9ys"
+const token = ""
 client.once('ready', () => {
 	console.log(`Ready`)
 });
