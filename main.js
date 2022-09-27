@@ -11,11 +11,7 @@ const cron = require('node-cron');
 const puppeteer = require("puppeteer");
 const { count } = require('console');
 const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_VOICE_STATES"] });
-<<<<<<< HEAD
 const token = "OTg2NzEyNjkwOTA5MTI2NzI3.GHRoxX.qXw55gwyID_GwP0XsYAx9QAc6LAsIVE03vVfos"
-=======
-const token = ""
->>>>>>> 5ab260ac396a820f96125744e81da3f5fba76af5
 client.once('ready', () => {
 	console.log(`Ready`)
 });
@@ -87,7 +83,7 @@ let commands = {
         }
     },
     yo : {
-        filter: message=>message.content.includes("yo") || message.content.includes("jo mama"),
+        filter: message=>message.content.includes("yo mama"),
         callback: function(e){
             for (let [key, value] of Object.entries(jo)) {
                 if (e.content.includes(key)) {
@@ -396,7 +392,7 @@ let commands = {
         }
     },
     skip : {
-        filter: message=>message.content.startsWith("!skip"),
+        filter: message=>message.content.startsWith("!skip") || message.content.startsWith("next song"),
         callback: async function(e){
             player.stop()
             e.channel.send("Music skipped")
@@ -473,7 +469,6 @@ Queue: ${titles}
     insult : {
         filter: message=>message.content.startsWith("!insult"),
         callback: function(e){
-                console.log(insults)
                 e.channel.send(insults[Math.floor(Math.random() * countsd)])
             
         }
@@ -487,6 +482,24 @@ Queue: ${titles}
             
         }
     },
+    shutup : {
+        filter: message=>message.content.toLowerCase().replace( /\s/g, '').includes("shutup"),
+        callback: function(e){
+            e.channel.send("Calm it down now.")
+        }
+    },
+    hi : {
+        filter: message=>message.content.startsWith("!hi"),
+        callback: function(e){
+            e.channel.send("$hi")
+        }
+    },
+    // hi : {
+    //     filter: message=>message.content.startsWith("$hi"),
+    //     callback: function(e){
+    //         e.channel.send("No")
+    //     }
+    // },
 
     // permissions : {
     //     filter: message=>message.content.startsWith("!permissions"),
@@ -540,8 +553,12 @@ client.on('messageCreate', async message => {
             message.channel.send("Ping!")
         }
         }
-        
+        if (message.content.startsWith("Wassup, I am Danostevo Bot!") && message.author.id == "1023977043534286888") {
+            message.channel.send("<@1023977043534286888> " + insults[Math.floor(Math.random() * countsd)])
+        }
     }
+    
+
     
 );
 
