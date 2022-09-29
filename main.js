@@ -494,6 +494,13 @@ Queue: ${titles}
             e.channel.send("$hi")
         }
     },
+    calc : {
+        filter: message=>message.content.startsWith("!calc"),
+        callback: function(e){
+            var args = e.content.replace("!calc ", "")
+            eval(args)
+        }
+    }
     // hi : {
     //     filter: message=>message.content.startsWith("$hi"),
     //     callback: function(e){
