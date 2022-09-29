@@ -500,7 +500,13 @@ Queue: ${titles}
             var args = e.content.replace("!calc ", "")
             eval(args)
         }
-    }
+    },
+    rankdown : {
+        filter: message=>message.content.includes("rank") && message.content.includes("down"),
+        callback: function(e){
+            e.channel.send("Ranking down should only be done in extreme circumstances and should therefore be very rarely done. For further information please ask Edache.")
+        }
+    },
     // hi : {
     //     filter: message=>message.content.startsWith("$hi"),
     //     callback: function(e){
