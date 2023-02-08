@@ -9,9 +9,10 @@ const discordTTS = require('discord-tts');
 const readline = require('readline');
 const cron = require('node-cron');
 const puppeteer = require("puppeteer");
+const fetch = require('node-fetch');
 const { count } = require('console');
 const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_VOICE_STATES"] });
-const token = "OTg2NzEyNjkwOTA5MTI2NzI3.GHRoxX.qXw55gwyID_GwP0XsYAx9QAc6LAsIVE03vVfos"
+const token = process.env.TOKEN
 client.once('ready', () => {
 	console.log(`Ready`)
 });
@@ -303,6 +304,37 @@ let commands = {
         callback: function(e){
             console.log(e.author)
             e.channel.send("racist");
+        }
+    },
+    quote : {
+        filter: message=>String(message.content).includes("inspire me"),
+        callback: function(e){
+            fetch("https://www.inspirobot.me/api?generate=true")
+            .then(function(response){
+                console.log(response)
+                return response.text()
+            })
+            .then((data) => {
+                e.channel.send({ files: [{ attachment: data }] });
+            })
+            
+        }
+    },
+    quoteunlimited : {
+        filter: message=>message.content.startsWith("!inspire"),
+        callback: function(e){
+            var args = e.content.replace("!inspire ", "").split(" ")
+            for (let i = 0; i < args[0]; i++) {
+                fetch("https://www.inspirobot.me/api?generate=true")
+                .then(function(response){
+                    console.log(response)
+                    return response.text()
+                })
+                .then((data) => {
+                    e.channel.send({ files: [{ attachment: data }] });
+                })
+            }
+            
         }
     },
     deeznutz : {
