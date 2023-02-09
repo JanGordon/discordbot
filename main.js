@@ -8,7 +8,7 @@ const fs = require('fs');
 const discordTTS = require('discord-tts');
 const readline = require('readline');
 const cron = require('node-cron');
-const puppeteer = require("puppeteer");
+// const puppeteer = require("puppeteer");
 const fetch = require('node-fetch');
 const { count } = require('console');
 const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_VOICE_STATES"] });
@@ -385,24 +385,24 @@ let commands = {
             setTimeout(()=>{e.channel.send("LOL")})
         }
     },
-    scout : {
-        filter: message=>message.content.startsWith("!scout"),
-        callback: async function(e){
-            var args = e.content.replace("!scout ", "").split(" ")
-            const browser = await puppeteer.launch();
-            const page = await browser.newPage();
-            try {
-                await page.goto(args[0]);
-                await page.screenshot({path: 'screenshot.png'});
-                e.channel.send({files: ["screenshot.png"]})
-            } catch (err) {
-                e.channel.send("Failed to scout")
-            }
+    // scout : {
+    //     filter: message=>message.content.startsWith("!scout"),
+    //     callback: async function(e){
+    //         var args = e.content.replace("!scout ", "").split(" ")
+    //         const browser = await puppeteer.launch();
+    //         const page = await browser.newPage();
+    //         try {
+    //             await page.goto(args[0]);
+    //             await page.screenshot({path: 'screenshot.png'});
+    //             e.channel.send({files: ["screenshot.png"]})
+    //         } catch (err) {
+    //             e.channel.send("Failed to scout")
+    //         }
             
-            browser.close();
+    //         browser.close();
             
-        }
-    },
+    //     }
+    // },
     play : {
         filter: message=>message.content.startsWith("!play"),
         callback: async function(e){
