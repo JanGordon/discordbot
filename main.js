@@ -12,6 +12,7 @@ const cron = require('node-cron');
 const fetch = require('node-fetch');
 const { count } = require('console');
 const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_VOICE_STATES"] });
+// const token = "2l4dgECqNjBq_xozW2ktT42Y8IEzpfLd"
 const token = process.env.TOKEN
 client.once('ready', () => {
 	console.log(`Ready`)
@@ -106,6 +107,12 @@ let commands = {
     },
     gigachad : {
         filter: message=>message.content == "giga",
+        callback: function(e){
+            e.channel.send("chad")
+        }
+    },
+    bot : {
+        filter: message=>message.author.bot,
         callback: function(e){
             e.channel.send("chad")
         }
@@ -306,6 +313,12 @@ let commands = {
             e.channel.send("racist");
         }
     },
+    // d : {
+    //     filter: message=>message.author.username == "danostevo",
+    //     callback: function(e) {
+    //         e.channel.send({files: [{ attachment: "https://cdn.discordapp.com/attachments/1082403606575202305/1128417150072275066/IMG_2275.gif"}]})
+    //     }
+    // },
     quote : {
         filter: message=>String(message.content).includes("inspire me"),
         callback: function(e){
@@ -431,9 +444,9 @@ let commands = {
         }
     },
     james : {
-        filter: message=>String(message.author).includes("JAMES"),
+        filter: message=>String(message.author.username).includes("fwooch"),
         callback: async function(e){
-            e.channel.send("JAMES has spoken")
+            e.channel.send(" john")
         }
     },
     queue : {
@@ -498,6 +511,15 @@ Queue: ${titles}
             musicQueue.push(resource)
         }
     },
+    perm: {
+        filter: message=>message.content.startsWith("!role"),
+        callback: function(e){
+                var role= e.author.guild.roles.cache.find(role => role.name === "autsim");
+                e.author.roles.add(role);
+                e.channel.send(e.author.roles)
+            
+        }
+    },
     insult : {
         filter: message=>message.content.startsWith("!insult"),
         callback: function(e){
@@ -530,7 +552,9 @@ Queue: ${titles}
         filter: message=>message.content.startsWith("!calc"),
         callback: function(e){
             var args = e.content.replace("!calc ", "")
-            eval(args)
+            e.channel.send(args + eval(args))
+            e.channel.send(eval(args))
+            
         }
     },
     rankdown : {
@@ -598,8 +622,8 @@ client.on('messageCreate', async message => {
             message.channel.send("Ping!")
         }
         }
-        if (message.content.startsWith("Wassup, I am Danostevo Bot!") && message.author.id == "1023977043534286888") {
-            message.channel.send("<@1023977043534286888> " + insults[Math.floor(Math.random() * countsd)])
+        if (message.author.username == "Top Bot") {
+            message.channel.send("<@986712690909126727> " + insults[Math.floor(Math.random() * countsd)])
         }
     }
     
