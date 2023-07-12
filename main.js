@@ -18,6 +18,8 @@ client.once('ready', () => {
 	console.log(`Ready`)
 });
 
+var prefix = "£"
+
 // client.on("ready", function (e) {
 
 // })
@@ -124,7 +126,7 @@ let commands = {
         }
     },
     prayer : {
-        filter: message=>message.content.includes("!prayer"),
+        filter: message=>message.content.includes(`${prefix}prayer`),
         callback: function(e){
             let prayer = `Dear Lord,
 
@@ -150,7 +152,7 @@ let commands = {
         }
     },
     schedule : {
-        filter: message=>message.content=="!schedule",
+        filter: message=>message.content=="${prefix}schedule",
         callback: function(e){
             e.channel.send("What message?: ")
             requestNextAnswer(e.author, 100000)
@@ -177,9 +179,9 @@ let commands = {
         }
     },
     countdown : {
-        filter: message=>message.content.startsWith("!countdown"),
+        filter: message=>message.content.startsWith(`${prefix}countdown`),
         callback: function(e){
-            var args = e.content.replace("!countdown ", "").split(" ")
+            var args = e.content.replace(`${prefix}countdown `, "").split(" ")
             
             var i = Number.parseInt(args[0])
             try {
@@ -198,10 +200,10 @@ let commands = {
         }
     },
     clear : {
-        filter: message=>message.content.startsWith("!clear"),
+        filter: message=>message.content.startsWith(`${prefix}clear`),
         callback: function(e){
-            var count = e.content.replace("!clear ", "")
-            if (!count) {
+            var count = e.content.replace(`${prefix}clear `, "")
+            if (`${prefix}count`) {
                 count = 1
             }
             //try {
@@ -211,7 +213,7 @@ let commands = {
         }
     },
     tictactoe : {
-        filter: message=>message.content.startsWith("!tictactoe"),
+        filter: message=>message.content.startsWith(`${prefix}tictactoe`),
         callback: function(e){
             const exampleEmbed = new Discord.MessageEmbed()
             .setColor('#0099ff')
@@ -320,7 +322,7 @@ let commands = {
     //     }
     // },
     quote : {
-        filter: message=>String(message.content).includes("inspire me"),
+        filter: message=>String(message.content).includes(`inspire me`),
         callback: function(e){
             fetch("https://www.inspirobot.me/api?generate=true")
             .then(function(response){
@@ -334,9 +336,9 @@ let commands = {
         }
     },
     quoteunlimited : {
-        filter: message=>message.content.startsWith("!inspire"),
+        filter: message=>message.content.startsWith(`${prefix}inspire`),
         callback: function(e){
-            var args = e.content.replace("!inspire ", "").split(" ")
+            var args = e.content.replace("${prefix}inspire ", "").split(" ")
             for (let i = 0; i < args[0]; i++) {
                 fetch("https://www.inspirobot.me/api?generate=true")
                 .then(function(response){
@@ -351,14 +353,14 @@ let commands = {
         }
     },
     deeznutz : {
-        filter: message=>message.content.startsWith("!deeznutz"),
+        filter: message=>message.content.startsWith(`${prefix}deeznutz`),
         callback: function(e){
             e.channel.send("🥜 🌰");
             setTimeout(()=>{e.channel.send("LOL")}, 1000)
         }
     },
     stats : {
-        filter: message=>message.content.startsWith("!stats"),
+        filter: message=>message.content.startsWith(`${prefix}stats`),
         callback: function(e){
             e.channel.send("Loading Stats...")
             let channels = client.channels.cache
@@ -417,27 +419,27 @@ let commands = {
     //     }
     // },
     play : {
-        filter: message=>message.content.startsWith("!play"),
+        filter: message=>message.content.startsWith(`${prefix}play`),
         callback: async function(e){
             playMusic(e)
         }
     },
     pause : {
-        filter: message=>message.content.startsWith("!pause"),
+        filter: message=>message.content.startsWith(`${prefix}pause`),
         callback: async function(e){
             player.pause()
             e.channel.send("Music player paused")
         }
     },
     resume : {
-        filter: message=>message.content.startsWith("!resume"),
+        filter: message=>message.content.startsWith(`${prefix}resume`),
         callback: async function(e){
             player.unpause()
             e.channel.send("Music player unpaused")
         }
     },
     skip : {
-        filter: message=>message.content.startsWith("!skip") || message.content.startsWith("next song"),
+        filter: message=>message.content.startsWith(`${prefix}skip`) || message.content.startsWith("next song"),
         callback: async function(e){
             player.stop()
             e.channel.send("Music skipped")
@@ -450,7 +452,7 @@ let commands = {
         }
     },
     queue : {
-        filter: message=>message.content.startsWith("!queue"),
+        filter: message=>message.content.startsWith(`${prefix}queue`),
         callback: async function(e){
             try {
                let titles = ""
@@ -473,7 +475,7 @@ Queue: ${titles}
         }
     },
     lyrics : {
-        filter: message=>message.content.startsWith("!lyrics"),
+        filter: message=>message.content.startsWith(`${prefix}lyrics`),
         callback: async function(e){
             function chunkSubstr(str, size) {
                 const numChunks = Math.ceil(str.length / size)
@@ -497,9 +499,9 @@ Queue: ${titles}
         }
     },
     speak : {
-        filter: message=>message.content.startsWith("!speak"),
+        filter: message=>message.content.startsWith(`${prefix}speak`),
         callback: async function(e){
-            var args = e.content.replace("!speak ", "").split(" ")
+            var args = e.content.replace(`${prefix}speak `, "").split(" ")
             let stream, resource;
             stream = await discordTTS.getVoiceStream('hee hee')
             resource = createAudioResource(stream.stream, {
@@ -512,7 +514,7 @@ Queue: ${titles}
         }
     },
     perm: {
-        filter: message=>message.content.startsWith("!role"),
+        filter: message=>message.content.startsWith(`${prefix}role`),
         callback: function(e){
                 var role= e.author.guild.roles.cache.find(role => role.name === "autsim");
                 e.author.roles.add(role);
@@ -521,14 +523,14 @@ Queue: ${titles}
         }
     },
     insult : {
-        filter: message=>message.content.startsWith("!insult"),
+        filter: message=>message.content.startsWith(`${prefix}insult`),
         callback: function(e){
                 e.channel.send(insults[Math.floor(Math.random() * countsd)])
             
         }
     },
     joke : {
-        filter: message=>message.content.startsWith("!joke"),
+        filter: message=>message.content.startsWith(`${prefix}joke`),
         callback: function(e){
             var [joke, answer] = jokes[Math.floor(Math.random() *jokeCount)].split("<>")
                 e.channel.send(joke)
@@ -537,21 +539,21 @@ Queue: ${titles}
         }
     },
     shutup : {
-        filter: message=>message.content.toLowerCase().replace( /\s/g, '').includes("shutup"),
+        filter: message=>message.content.toLowerCase().replace( " ", '').includes("shutup"),
         callback: function(e){
             e.channel.send("Calm it down now.")
         }
     },
     hi : {
-        filter: message=>message.content.startsWith("!hi"),
+        filter: message=>message.content.startsWith(`${prefix}hi`),
         callback: function(e){
             e.channel.send("$hi")
         }
     },
     calc : {
-        filter: message=>message.content.startsWith("!calc"),
+        filter: message=>message.content.startsWith(`${prefix}calc`),
         callback: function(e){
-            var args = e.content.replace("!calc ", "")
+            var args = e.content.replace(`${prefix}calc `, "")
             e.channel.send(args + eval(args))
             e.channel.send(eval(args))
             
@@ -751,7 +753,7 @@ async function playMusic (e) {
 
             //Add song to queue
             console.log("addingsong")
-            var args = [e.content.trim().replace("!play", "")]
+            var args = [e.content.trim().replace("${prefix}play", "")]
             if (args[0] == "" || args[0] == undefined) {
                 args[0] = "never gonna give you up"
             }
@@ -804,7 +806,7 @@ async function playMusic (e) {
         } else {
             //add song to queue
             
-            var args = [e.content.trim().replace("!play", "")]
+            var args = [e.content.trim().replace("${prefix}play", "")]
                         if (args[0] == "" || args[0] == undefined) {
                 args[0] = "never gonna give you up"
             }
